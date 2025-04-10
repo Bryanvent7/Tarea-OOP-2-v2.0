@@ -140,6 +140,7 @@
     <ClInclude Include="Form1.h">
       <FileType>CppForm</FileType>
     </ClInclude>
+    <ClInclude Include="Gerente.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Resource.h" />
   </ItemGroup>
@@ -150,6 +151,7 @@
     <ClCompile Include="CuadroGerente.cpp" />
     <ClCompile Include="Empleado.cpp" />
     <ClCompile Include="Form1.cpp" />
+    <ClCompile Include="Gerente.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

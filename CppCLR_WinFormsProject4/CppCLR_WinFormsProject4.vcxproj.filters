@@ -38,6 +38,9 @@
     <ClInclude Include="Empleado.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Gerente.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CppCLR_WinFormsProject.cpp">
@@ -59,6 +62,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Empleado.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Gerente.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

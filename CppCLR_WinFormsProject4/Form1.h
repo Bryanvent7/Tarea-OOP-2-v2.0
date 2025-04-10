@@ -1,5 +1,9 @@
 #pragma once
 
+#include "Empleado.h"
+#include "Gerente.h"
+#include "Desarrollador.h"
+
 #include "CuadroGerente.h"
 #include "CuadroDesarrollador.h"
 
@@ -378,38 +382,39 @@ namespace CppCLRWinFormsProject {
 		}
 #pragma endregion
 	private: System::Void BTONAGREGAR_Click(System::Object^ sender, System::EventArgs^ e) {
-		// Obtener valores de los controles
-		String^ id = CMPOID->Text;
-		String^ nombre = CMPONAME->Text;
-		String^ apellido = CMPOAPELLI->Text;
-		String^ salario = CMPOSALARIO->Text;
-		String^ rol = "Empleado";
-		String^ bono = "0"; // Valor por defecto
-		String^ lineas = "0";
-		String^ precioLinea = "0";
+		// Validación básica de campos vacíos
+		if (CMPOID->Text->Length == 0 || CMPONAME->Text->Length == 0 ||
+			CMPOAPELLI->Text->Length == 0 || CMPOSALARIO->Text->Length == 0) {
+			MessageBox::Show("Todos los campos son obligatorios");
+			return;
+		}
 
-		// Validar ID único
+		// Convertir salario
+		double salario;
+		if (!Double::TryParse(CMPOSALARIO->Text, salario)) {
+			MessageBox::Show("El salario debe ser un número válido");
+			return;
+		}
+
+		// Verificar ID único
 		for each (DataGridViewRow ^ row in Personal->Rows) {
-			if (row->Cells[0]->Value != nullptr && row->Cells[0]->Value->ToString() == id) {
-				MessageBox::Show("El ID ya existe.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			if (row->Cells[0]->Value != nullptr && row->Cells[0]->Value->ToString() == CMPOID->Text) {
+				MessageBox::Show("El ID ya existe");
 				return;
 			}
 		}
 
-		// Validar campos requeridos
-		if (String::IsNullOrWhiteSpace(id) || String::IsNullOrWhiteSpace(nombre) ||
-			String::IsNullOrWhiteSpace(apellido) || String::IsNullOrWhiteSpace(salario)) {
-			MessageBox::Show("Por favor, llene todos los campos.");
-			return;
-		}
+		// Procesar según el tipo de empleado
+		String^ rol = "Empleado";
+		String^ bono = "0";
+		String^ lineas = "0";
+		String^ precioLinea = "0";
 
 		if (CHKGERENTE->Checked) {
 			rol = "Gerente";
-			CuadroGerente^ CG = gcnew CuadroGerente();
-			if (CG->ShowDialog() == System::Windows::Forms::DialogResult::OK) {
-				bono = CG->Bono;
-				lineas = "0";
-				precioLinea = "0";
+			CuadroGerente^ formGerente = gcnew CuadroGerente();
+			if (formGerente->ShowDialog() == Windows::Forms::DialogResult::OK) {
+				bono = formGerente->Bono->ToString();  // Usando -> aquí
 			}
 			else {
 				return;
@@ -417,28 +422,36 @@ namespace CppCLRWinFormsProject {
 		}
 		else if (CHKDEVELOPER->Checked) {
 			rol = "Desarrollador";
-			CuadroDesarrollador^ CD = gcnew CuadroDesarrollador();
-			if (CD->ShowDialog() == System::Windows::Forms::DialogResult::OK) {
-				lineas = CD->LineasHechas.ToString();
-				precioLinea = CD->PrecioPorLinea.ToString("F2"); // Formato con 2 decimales
-				bono = "0";
+			CuadroDesarrollador^ formDev = gcnew CuadroDesarrollador();
+			if (formDev->ShowDialog() == Windows::Forms::DialogResult::OK) {
+				lineas = formDev->LineasHechas.ToString();  // Para tipos de valor (int) se usa .
+				precioLinea = formDev->PrecioPorLinea.ToString("F2");  // Para tipos de valor (double) se usa .
 			}
 			else {
 				return;
 			}
 		}
 
-		// Agregar al DataGridView
-		Personal->Rows->Add(id, nombre, apellido, rol, salario, bono, lineas, precioLinea);
+		// Agregar a DataGridView - Nota cómo se usa -> para métodos de String^
+		Personal->Rows->Add(
+			CMPOID->Text,
+			CMPONAME->Text,
+			CMPOAPELLI->Text,
+			rol,
+			salario.ToString("F2"),  // double es tipo de valor, usa .
+			bono,                   // Ya es String^
+			lineas,                 // Ya es String^
+			precioLinea            // Ya es String^
+		);
 
-		// Limpiar controles
+		// Limpiar formulario
 		CMPOID->Clear();
 		CMPONAME->Clear();
 		CMPOAPELLI->Clear();
 		CMPOSALARIO->Clear();
 		CHKGERENTE->Checked = false;
 		CHKDEVELOPER->Checked = false;
+		CMPOID->Focus();
 	}
-
 };
 }

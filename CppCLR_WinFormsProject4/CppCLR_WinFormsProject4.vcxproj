@@ -136,6 +136,7 @@
     <ClInclude Include="CuadroGerente.h">
       <FileType>CppForm</FileType>
     </ClInclude>
+    <ClInclude Include="Desarrollador.h" />
     <ClInclude Include="Empleado.h" />
     <ClInclude Include="Form1.h">
       <FileType>CppForm</FileType>
@@ -149,6 +150,7 @@
     <ClCompile Include="CppCLR_WinFormsProject.cpp" />
     <ClCompile Include="CuadroDesarrollador.cpp" />
     <ClCompile Include="CuadroGerente.cpp" />
+    <ClCompile Include="Desarrollador.cpp" />
     <ClCompile Include="Empleado.cpp" />
     <ClCompile Include="Form1.cpp" />
     <ClCompile Include="Gerente.cpp" />

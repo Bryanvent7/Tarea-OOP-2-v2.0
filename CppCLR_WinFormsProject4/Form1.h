@@ -77,6 +77,7 @@ namespace CppCLRWinFormsProject {
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^ CABEZBONO;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^ CABEZLINE;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^ CABEZLINEPRICE;
+	private: System::Windows::Forms::RadioButton^ CHKEMPLOYE;
 
 
 
@@ -136,12 +137,14 @@ namespace CppCLRWinFormsProject {
 			this->CABEZBONO = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->CABEZLINE = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->CABEZLINEPRICE = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->CHKEMPLOYE = (gcnew System::Windows::Forms::RadioButton());
 			this->groupBox1->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->Personal))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// groupBox1
 			// 
+			this->groupBox1->Controls->Add(this->CHKEMPLOYE);
 			this->groupBox1->Controls->Add(this->CHKDEVELOPER);
 			this->groupBox1->Controls->Add(this->CHKGERENTE);
 			this->groupBox1->Controls->Add(this->BTONAGREGAR);
@@ -159,7 +162,7 @@ namespace CppCLRWinFormsProject {
 			this->groupBox1->ForeColor = System::Drawing::SystemColors::AppWorkspace;
 			this->groupBox1->Location = System::Drawing::Point(12, 12);
 			this->groupBox1->Name = L"groupBox1";
-			this->groupBox1->Size = System::Drawing::Size(364, 256);
+			this->groupBox1->Size = System::Drawing::Size(364, 266);
 			this->groupBox1->TabIndex = 0;
 			this->groupBox1->TabStop = false;
 			this->groupBox1->Text = L"Agregar";
@@ -167,7 +170,7 @@ namespace CppCLRWinFormsProject {
 			// CHKDEVELOPER
 			// 
 			this->CHKDEVELOPER->AutoSize = true;
-			this->CHKDEVELOPER->Location = System::Drawing::Point(159, 211);
+			this->CHKDEVELOPER->Location = System::Drawing::Point(159, 229);
 			this->CHKDEVELOPER->Name = L"CHKDEVELOPER";
 			this->CHKDEVELOPER->Size = System::Drawing::Size(145, 24);
 			this->CHKDEVELOPER->TabIndex = 12;
@@ -180,7 +183,7 @@ namespace CppCLRWinFormsProject {
 			this->CHKGERENTE->AutoSize = true;
 			this->CHKGERENTE->Cursor = System::Windows::Forms::Cursors::Hand;
 			this->CHKGERENTE->ForeColor = System::Drawing::SystemColors::AppWorkspace;
-			this->CHKGERENTE->Location = System::Drawing::Point(159, 173);
+			this->CHKGERENTE->Location = System::Drawing::Point(159, 199);
 			this->CHKGERENTE->Name = L"CHKGERENTE";
 			this->CHKGERENTE->Size = System::Drawing::Size(97, 24);
 			this->CHKGERENTE->TabIndex = 11;
@@ -192,7 +195,7 @@ namespace CppCLRWinFormsProject {
 			this->BTONAGREGAR->Cursor = System::Windows::Forms::Cursors::Hand;
 			this->BTONAGREGAR->FlatAppearance->BorderColor = System::Drawing::SystemColors::WindowFrame;
 			this->BTONAGREGAR->FlatAppearance->BorderSize = 15;
-			this->BTONAGREGAR->Location = System::Drawing::Point(7, 211);
+			this->BTONAGREGAR->Location = System::Drawing::Point(13, 220);
 			this->BTONAGREGAR->Name = L"BTONAGREGAR";
 			this->BTONAGREGAR->Size = System::Drawing::Size(119, 33);
 			this->BTONAGREGAR->TabIndex = 10;
@@ -300,7 +303,7 @@ namespace CppCLRWinFormsProject {
 			this->Personal->RowHeadersVisible = false;
 			this->Personal->RowHeadersWidth = 51;
 			this->Personal->RowTemplate->Height = 24;
-			this->Personal->Size = System::Drawing::Size(423, 244);
+			this->Personal->Size = System::Drawing::Size(423, 254);
 			this->Personal->TabIndex = 1;
 			// 
 			// CABEZID
@@ -364,12 +367,23 @@ namespace CppCLRWinFormsProject {
 			this->CABEZLINEPRICE->Name = L"CABEZLINEPRICE";
 			this->CABEZLINEPRICE->Width = 70;
 			// 
+			// CHKEMPLOYE
+			// 
+			this->CHKEMPLOYE->AutoSize = true;
+			this->CHKEMPLOYE->Location = System::Drawing::Point(159, 172);
+			this->CHKEMPLOYE->Name = L"CHKEMPLOYE";
+			this->CHKEMPLOYE->Size = System::Drawing::Size(137, 24);
+			this->CHKEMPLOYE->TabIndex = 13;
+			this->CHKEMPLOYE->TabStop = true;
+			this->CHKEMPLOYE->Text = L"Empleado";
+			this->CHKEMPLOYE->UseVisualStyleBackColor = true;
+			// 
 			// Form1
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->BackColor = System::Drawing::SystemColors::Desktop;
-			this->ClientSize = System::Drawing::Size(832, 292);
+			this->ClientSize = System::Drawing::Size(832, 302);
 			this->Controls->Add(this->Personal);
 			this->Controls->Add(this->groupBox1);
 			this->ForeColor = System::Drawing::SystemColors::ControlText;
@@ -396,6 +410,19 @@ namespace CppCLRWinFormsProject {
         CMPOAPELLI->Text == "Ultra" && 
         CMPOSALARIO->Text == "Kill")
     {
+
+			 // Cambiar colores
+			 this->BackColor = Color::Red;  // Fondo del formulario rojo
+
+			 // GroupBox rojo oscuro
+			 groupBox1->BackColor = Color::DarkRed;
+			 groupBox1->ForeColor = Color::White;
+
+			 // DataGridView rojo oscuro
+			 Personal->BackgroundColor = Color::DarkRed;
+			 Personal->ForeColor = Color::White;
+			 Personal->GridColor = Color::Firebrick;
+
             if (CHKGERENTE->Checked) 
             {
                 auto player = gcnew System::Media::SoundPlayer("Tenebre Rosso Sangue(cover).wav");
@@ -425,13 +452,22 @@ namespace CppCLRWinFormsProject {
 		}
 
 		// Procesar según el tipo de empleado
-		String^ rol = "Empleado";
-		String^ bono = "0";
-		String^ lineas = "0";
-		String^ precioLinea = "0";
+		String^ rol;
+		String^ bono;
+		String^ lineas;
+		String^ precioLinea;
 
+
+		if (CHKEMPLOYE->Checked) {
+			rol = "Empleado";
+			bono = "0";
+			lineas = "0";
+			precioLinea = "0";
+		}
 		if (CHKGERENTE->Checked) {
 			rol = "Gerente";
+			lineas = "0";
+			precioLinea = "0";
 			CuadroGerente^ formGerente = gcnew CuadroGerente();
 			if (formGerente->ShowDialog() == Windows::Forms::DialogResult::OK) {
 				bono = formGerente->Bono->ToString();  // Usando -> aquí
@@ -442,6 +478,7 @@ namespace CppCLRWinFormsProject {
 		}
 		else if (CHKDEVELOPER->Checked) {
 			rol = "Desarrollador";
+			bono = "0";
 			CuadroDesarrollador^ formDev = gcnew CuadroDesarrollador();
 			if (formDev->ShowDialog() == Windows::Forms::DialogResult::OK) {
 				lineas = formDev->LineasHechas.ToString();  // Para tipos de valor (int) se usa .

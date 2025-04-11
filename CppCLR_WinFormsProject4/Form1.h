@@ -30,6 +30,20 @@ namespace CppCLRWinFormsProject {
 			//
 			//TODO: Add the constructor code here
 			//
+
+			// Inicializar colores
+			rojoForm = Color::FromArgb(220, 60, 60);
+			rojoOscuro = Color::FromArgb(100, 20, 20);
+			rojoGrid = Color::FromArgb(150, 40, 40);
+
+			// Guardar colores originales
+			colorOriginalForm = this->BackColor;
+			colorOriginalTextForm = this->ForeColor;
+			colorOriginalGroupBox = groupBox1->BackColor;
+			colorOriginalTextGroupBox = groupBox1->ForeColor;
+			colorOriginalGrid = Personal->BackgroundColor;
+			colorOriginalTextGrid = Personal->ForeColor;
+
 		}
 
 	protected:
@@ -42,10 +56,26 @@ namespace CppCLRWinFormsProject {
 			{
 				delete components;
 			}
+
+			if (timerTransicion != nullptr)
+			{
+				delete timerTransicion;
+			}
 		}
 
-	
-
+	private:
+		// Variables para colores (declaradas como miembros de clase)
+		Color rojoForm;
+		Color rojoOscuro;
+		Color rojoGrid;
+		int pasoTransicion;
+		Timer^ timerTransicion;
+		Color colorOriginalForm;
+		Color colorOriginalTextForm;
+		Color colorOriginalGroupBox;
+		Color colorOriginalTextGroupBox;
+		Color colorOriginalGrid;
+		Color colorOriginalTextGrid;
 
 
 	private: System::Windows::Forms::GroupBox^ groupBox1;
@@ -397,7 +427,101 @@ namespace CppCLRWinFormsProject {
 
 		}
 #pragma endregion
-	private: System::Void BTONAGREGAR_Click(System::Object^ sender, System::EventArgs^ e) {
+
+		private:
+			// Función para interpolación de colores
+			Color InterpolarColor(Color inicio, Color fin, int porcentaje)
+			{
+				porcentaje = Math::Min(100, Math::Max(0, porcentaje));
+				int r = inicio.R + (fin.R - inicio.R) * porcentaje / 100;
+				int g = inicio.G + (fin.G - inicio.G) * porcentaje / 100;
+				int b = inicio.B + (fin.B - inicio.B) * porcentaje / 100;
+				return Color::FromArgb(r, g, b);
+			}
+
+			// Manejador del timer para la transición
+			void TimerTransicion_Tick(Object^ sender, EventArgs^ e)
+			{
+				pasoTransicion += 2; // Velocidad de la transición
+
+				if (pasoTransicion > 100)
+				{
+					timerTransicion->Stop();
+					// Iniciar timer para regresar a colores originales después de 1 minuto
+					Timer^ timerReset = gcnew Timer();
+					timerReset->Interval = 120000;
+					timerReset->Tick += gcnew EventHandler(this, &Form1::ResetearColores);
+					timerReset->Start();
+					return;
+				}
+
+				// Colores objetivo
+				Color rojoForm = Color::FromArgb(220, 60, 60);
+				Color rojoOscuro = Color::FromArgb(100, 20, 20);
+
+				// Aplicar interpolación
+				this->BackColor = InterpolarColor(Color::Black, rojoForm, pasoTransicion);
+				this->ForeColor = Color::White; // Texto siempre blanco en el formulario
+
+				groupBox1->BackColor = InterpolarColor(Color::Black, rojoOscuro, pasoTransicion);
+				groupBox1->ForeColor = Color::WhiteSmoke; // Texto claro
+
+				Personal->BackgroundColor = InterpolarColor(Color::Black, rojoOscuro, pasoTransicion);
+				Personal->ForeColor = Color::White; // Texto claro
+				Personal->GridColor = InterpolarColor(Color::Gray, Color::FromArgb(150, 40, 40), pasoTransicion);
+
+				// Asegurar visibilidad en celdas
+				Personal->DefaultCellStyle->BackColor = Personal->BackgroundColor;
+				Personal->DefaultCellStyle->ForeColor = Color::White;
+				Personal->ColumnHeadersDefaultCellStyle->BackColor = Color::FromArgb(120, 30, 30);
+				Personal->ColumnHeadersDefaultCellStyle->ForeColor = Color::White;
+			}
+
+			// Restablecer colores originales
+			void ResetearColores(Object^ sender, EventArgs^ e)
+			{
+				(safe_cast<Timer^>(sender))->Stop();
+				delete sender;
+
+				pasoTransicion = 0;
+				timerTransicion = gcnew Timer();
+				timerTransicion->Interval = 30;
+				timerTransicion->Tick += gcnew EventHandler(this, &Form1::RestaurarColores);
+				timerTransicion->Start();
+			}
+
+			// Transición de vuelta a colores normales
+			void RestaurarColores(Object^ sender, EventArgs^ e)
+			{
+				pasoTransicion += 2;
+
+				if (pasoTransicion > 100)
+				{
+					timerTransicion->Stop();
+					delete timerTransicion;
+					return;
+				}
+
+				this->BackColor = InterpolarColor(rojoForm, colorOriginalForm, pasoTransicion);
+				this->ForeColor = InterpolarColor(Color::White, colorOriginalTextForm, pasoTransicion);
+
+				groupBox1->BackColor = InterpolarColor(rojoOscuro, colorOriginalGroupBox, pasoTransicion);
+				groupBox1->ForeColor = InterpolarColor(Color::WhiteSmoke, colorOriginalTextGroupBox, pasoTransicion);
+
+				Personal->BackgroundColor = InterpolarColor(rojoOscuro, colorOriginalGrid, pasoTransicion);
+				Personal->ForeColor = InterpolarColor(Color::White, colorOriginalTextGrid, pasoTransicion);
+				Personal->GridColor = InterpolarColor(Color::FromArgb(150, 40, 40), SystemColors::ControlDarkDark, pasoTransicion);
+
+				// Restaurar estilos de celdas
+				if (pasoTransicion == 100) {
+					Personal->DefaultCellStyle->BackColor = colorOriginalGrid;
+					Personal->DefaultCellStyle->ForeColor = colorOriginalTextGrid;
+					Personal->ColumnHeadersDefaultCellStyle->BackColor = SystemColors::Control;
+					Personal->ColumnHeadersDefaultCellStyle->ForeColor = SystemColors::ControlText;
+				}
+			}
+
+		private: System::Void BTONAGREGAR_Click(System::Object^ sender, System::EventArgs^ e) {
 		// Validación básica de campos vacíos
 		if (CMPOID->Text->Length == 0 || CMPONAME->Text->Length == 0 ||
 			CMPOAPELLI->Text->Length == 0 || CMPOSALARIO->Text->Length == 0) {
@@ -409,8 +533,16 @@ namespace CppCLRWinFormsProject {
         CMPONAME->Text == "Interactive" && 
         CMPOAPELLI->Text == "Ultra" && 
         CMPOSALARIO->Text == "Kill")
-    {
+		{
 
+			 // Iniciar transición
+			 pasoTransicion = 0;
+			 timerTransicion = gcnew Timer();
+			 timerTransicion->Interval = 30;
+			 timerTransicion->Tick += gcnew EventHandler(this, &Form1::TimerTransicion_Tick);
+			 timerTransicion->Start();
+
+			 /*
 			 // Cambiar colores
 			 this->BackColor = Color::Red;  // Fondo del formulario rojo
 
@@ -422,7 +554,7 @@ namespace CppCLRWinFormsProject {
 			 Personal->BackgroundColor = Color::DarkRed;
 			 Personal->ForeColor = Color::White;
 			 Personal->GridColor = Color::Firebrick;
-
+			 */
             if (CHKGERENTE->Checked) 
             {
                 auto player = gcnew System::Media::SoundPlayer("Tenebre Rosso Sangue(cover).wav");
@@ -433,6 +565,15 @@ namespace CppCLRWinFormsProject {
                 auto player = gcnew System::Media::SoundPlayer("Tenebre Rosso Sangue(Og).wav");
                 player->Play();
             }
+			// Limpiar formulario
+			CMPOID->Clear();
+			CMPONAME->Clear();
+			CMPOAPELLI->Clear();
+			CMPOSALARIO->Clear();
+			CHKEMPLOYE->Checked = false;
+			CHKGERENTE->Checked = false;
+			CHKDEVELOPER->Checked = false;
+			CMPOID->Focus();
         return;
     }
 
@@ -506,6 +647,7 @@ namespace CppCLRWinFormsProject {
 		CMPONAME->Clear();
 		CMPOAPELLI->Clear();
 		CMPOSALARIO->Clear();
+		CHKEMPLOYE->Checked = false;
 		CHKGERENTE->Checked = false;
 		CHKDEVELOPER->Checked = false;
 		CMPOID->Focus();

@@ -7,6 +7,15 @@
 #ifndef PCH_H
 #define PCH_H
 
+// Aísla los includes nativos
+#pragma managed(push, off)
+// Evita la definición conflictiva de IServiceProvider
+#define __IServiceProvider_INTERFACE_DEFINED__
+#include <windows.h>
+#include <mmsystem.h>
+#pragma managed(pop)
+#pragma comment(lib, "winmm.lib")
+
 // add headers that you want to pre-compile here
 
 #endif //PCH_H

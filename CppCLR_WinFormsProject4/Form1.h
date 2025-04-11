@@ -10,11 +10,11 @@
 namespace CppCLRWinFormsProject {
 
 	using namespace System;
-	//using namespace System::ComponentModel;
-	//using namespace System::Collections;
+	using namespace System::ComponentModel;
+	using namespace System::Collections;
 	using namespace System::Windows::Forms;
-	//using namespace System::Data;
-	//using namespace System::Drawing;
+	using namespace System::Data;
+	using namespace System::Drawing;
 	using namespace System::Media;
 
 
@@ -400,13 +400,11 @@ namespace CppCLRWinFormsProject {
             {
                 auto player = gcnew System::Media::SoundPlayer("Tenebre Rosso Sangue(cover).wav");
                 player->Play();
-                //MessageBox::Show("¡Modo Gerente Secreto!", "SECRETO");
             }
             else if (CHKDEVELOPER->Checked) 
             {
                 auto player = gcnew System::Media::SoundPlayer("Tenebre Rosso Sangue(Og).wav");
                 player->Play();
-                //MessageBox::Show("¡Modo Desarrollador Secreto!", "SECRETO");
             }
         return;
     }

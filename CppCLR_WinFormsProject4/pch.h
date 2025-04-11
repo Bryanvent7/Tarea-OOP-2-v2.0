@@ -7,6 +7,8 @@
 #ifndef PCH_H
 #define PCH_H
 
+// add headers that you want to pre-compile here
+
 // Aísla los includes nativos
 #pragma managed(push, off)
 // Evita la definición conflictiva de IServiceProvider
@@ -16,6 +18,6 @@
 #pragma managed(pop)
 #pragma comment(lib, "winmm.lib")
 
-// add headers that you want to pre-compile here
+
 
 #endif //PCH_H

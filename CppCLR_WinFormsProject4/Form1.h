@@ -355,6 +355,7 @@ namespace CppCLRWinFormsProject {
 			this->CHKEMPLOYE->TabStop = true;
 			this->CHKEMPLOYE->Text = L"Empleado";
 			this->CHKEMPLOYE->UseVisualStyleBackColor = true;
+			this->CHKEMPLOYE->Checked = true; // Establecer como seleccionado por defecto
 			// 
 			// Form1
 			// 
@@ -480,7 +481,7 @@ namespace CppCLRWinFormsProject {
 		CMPONAME->Clear();
 		CMPOAPELLI->Clear();
 		CMPOSALARIO->Clear();
-		CHKEMPLOYE->Checked = false;
+		//CHKEMPLOYE->Checked = false;
 		CHKGERENTE->Checked = false;
 		CHKDEVELOPER->Checked = false;
 		CMPOID->Focus();

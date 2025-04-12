@@ -486,7 +486,7 @@ namespace CppCLRWinFormsProject {
 		CMPONAME->Clear();
 		CMPOAPELLI->Clear();
 		CMPOSALARIO->Clear();
-		//CHKEMPLOYE->Checked = false;
+		CHKEMPLOYE->Checked = true;
 		CHKGERENTE->Checked = false;
 		CHKDEVELOPER->Checked = false;
 		CMPOID->Focus();

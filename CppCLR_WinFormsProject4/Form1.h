@@ -3,9 +3,11 @@
 #include "Empleado.h"
 #include "Gerente.h"
 #include "Desarrollador.h"
+#include "Maestro.h"
 
 #include "CuadroGerente.h"
 #include "CuadroDesarrollador.h"
+#include "CuadroMastro.h"
 
 namespace CppCLRWinFormsProject {
 
@@ -68,6 +70,16 @@ namespace CppCLRWinFormsProject {
 
 	private: System::Windows::Forms::RadioButton^ CHKGERENTE;
 	private: System::Windows::Forms::RadioButton^ CHKDEVELOPER;
+
+
+
+
+
+
+
+
+	private: System::Windows::Forms::RadioButton^ CHKEMPLOYE;
+	private: System::Windows::Forms::RadioButton^ CHKMASTER;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^ CABEZID;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^ CABEZNAME;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^ CABEZAPELLI;
@@ -76,7 +88,9 @@ namespace CppCLRWinFormsProject {
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^ CABEZBONO;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^ CABEZLINE;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^ CABEZLINEPRICE;
-	private: System::Windows::Forms::RadioButton^ CHKEMPLOYE;
+	private: System::Windows::Forms::DataGridViewTextBoxColumn^ HEDTITLE;
+	private: System::Windows::Forms::DataGridViewTextBoxColumn^ HEDASIGNEDCLAS;
+	private: System::Windows::Forms::DataGridViewTextBoxColumn^ HEDSECASIGNED;
 
 	protected:
 
@@ -94,6 +108,8 @@ namespace CppCLRWinFormsProject {
 		void InitializeComponent(void)
 		{
 			this->groupBox1 = (gcnew System::Windows::Forms::GroupBox());
+			this->CHKMASTER = (gcnew System::Windows::Forms::RadioButton());
+			this->CHKEMPLOYE = (gcnew System::Windows::Forms::RadioButton());
 			this->CHKDEVELOPER = (gcnew System::Windows::Forms::RadioButton());
 			this->CHKGERENTE = (gcnew System::Windows::Forms::RadioButton());
 			this->BTONAGREGAR = (gcnew System::Windows::Forms::Button());
@@ -115,13 +131,16 @@ namespace CppCLRWinFormsProject {
 			this->CABEZBONO = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->CABEZLINE = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->CABEZLINEPRICE = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
-			this->CHKEMPLOYE = (gcnew System::Windows::Forms::RadioButton());
+			this->HEDTITLE = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->HEDASIGNEDCLAS = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->HEDSECASIGNED = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->groupBox1->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->Personal))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// groupBox1
 			// 
+			this->groupBox1->Controls->Add(this->CHKMASTER);
 			this->groupBox1->Controls->Add(this->CHKEMPLOYE);
 			this->groupBox1->Controls->Add(this->CHKDEVELOPER);
 			this->groupBox1->Controls->Add(this->CHKGERENTE);
@@ -140,10 +159,33 @@ namespace CppCLRWinFormsProject {
 			this->groupBox1->ForeColor = System::Drawing::SystemColors::AppWorkspace;
 			this->groupBox1->Location = System::Drawing::Point(12, 12);
 			this->groupBox1->Name = L"groupBox1";
-			this->groupBox1->Size = System::Drawing::Size(364, 266);
+			this->groupBox1->Size = System::Drawing::Size(364, 301);
 			this->groupBox1->TabIndex = 0;
 			this->groupBox1->TabStop = false;
 			this->groupBox1->Text = L"Agregar";
+			// 
+			// CHKMASTER
+			// 
+			this->CHKMASTER->AutoSize = true;
+			this->CHKMASTER->Location = System::Drawing::Point(159, 260);
+			this->CHKMASTER->Name = L"CHKMASTER";
+			this->CHKMASTER->Size = System::Drawing::Size(98, 24);
+			this->CHKMASTER->TabIndex = 14;
+			this->CHKMASTER->TabStop = true;
+			this->CHKMASTER->Text = L"Maestro";
+			this->CHKMASTER->UseVisualStyleBackColor = true;
+			// 
+			// CHKEMPLOYE
+			// 
+			this->CHKEMPLOYE->AutoSize = true;
+			this->CHKEMPLOYE->Checked = true;
+			this->CHKEMPLOYE->Location = System::Drawing::Point(159, 172);
+			this->CHKEMPLOYE->Name = L"CHKEMPLOYE";
+			this->CHKEMPLOYE->Size = System::Drawing::Size(112, 24);
+			this->CHKEMPLOYE->TabIndex = 13;
+			this->CHKEMPLOYE->TabStop = true;
+			this->CHKEMPLOYE->Text = L"Empleado";
+			this->CHKEMPLOYE->UseVisualStyleBackColor = true;
 			// 
 			// CHKDEVELOPER
 			// 
@@ -173,7 +215,7 @@ namespace CppCLRWinFormsProject {
 			this->BTONAGREGAR->Cursor = System::Windows::Forms::Cursors::Hand;
 			this->BTONAGREGAR->FlatAppearance->BorderColor = System::Drawing::SystemColors::WindowFrame;
 			this->BTONAGREGAR->FlatAppearance->BorderSize = 15;
-			this->BTONAGREGAR->Location = System::Drawing::Point(13, 220);
+			this->BTONAGREGAR->Location = System::Drawing::Point(13, 251);
 			this->BTONAGREGAR->Name = L"BTONAGREGAR";
 			this->BTONAGREGAR->Size = System::Drawing::Size(119, 33);
 			this->BTONAGREGAR->TabIndex = 10;
@@ -269,9 +311,10 @@ namespace CppCLRWinFormsProject {
 				static_cast<System::Int32>(static_cast<System::Byte>(26)));
 			this->Personal->CellBorderStyle = System::Windows::Forms::DataGridViewCellBorderStyle::Sunken;
 			this->Personal->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
-			this->Personal->Columns->AddRange(gcnew cli::array< System::Windows::Forms::DataGridViewColumn^  >(8) {
+			this->Personal->Columns->AddRange(gcnew cli::array< System::Windows::Forms::DataGridViewColumn^  >(11) {
 				this->CABEZID, this->CABEZNAME,
-					this->CABEZAPELLI, this->CABEZROL, this->CABEZSALARIO, this->CABEZBONO, this->CABEZLINE, this->CABEZLINEPRICE
+					this->CABEZAPELLI, this->CABEZROL, this->CABEZSALARIO, this->CABEZBONO, this->CABEZLINE, this->CABEZLINEPRICE, this->HEDTITLE,
+					this->HEDASIGNEDCLAS, this->HEDSECASIGNED
 			});
 			this->Personal->Cursor = System::Windows::Forms::Cursors::Default;
 			this->Personal->EnableHeadersVisualStyles = false;
@@ -281,7 +324,7 @@ namespace CppCLRWinFormsProject {
 			this->Personal->RowHeadersVisible = false;
 			this->Personal->RowHeadersWidth = 51;
 			this->Personal->RowTemplate->Height = 24;
-			this->Personal->Size = System::Drawing::Size(423, 254);
+			this->Personal->Size = System::Drawing::Size(423, 289);
 			this->Personal->TabIndex = 1;
 			// 
 			// CABEZID
@@ -345,24 +388,36 @@ namespace CppCLRWinFormsProject {
 			this->CABEZLINEPRICE->Name = L"CABEZLINEPRICE";
 			this->CABEZLINEPRICE->Width = 70;
 			// 
-			// CHKEMPLOYE
+			// HEDTITLE
 			// 
-			this->CHKEMPLOYE->AutoSize = true;
-			this->CHKEMPLOYE->Location = System::Drawing::Point(159, 172);
-			this->CHKEMPLOYE->Name = L"CHKEMPLOYE";
-			this->CHKEMPLOYE->Size = System::Drawing::Size(137, 24);
-			this->CHKEMPLOYE->TabIndex = 13;
-			this->CHKEMPLOYE->TabStop = true;
-			this->CHKEMPLOYE->Text = L"Empleado";
-			this->CHKEMPLOYE->UseVisualStyleBackColor = true;
-			this->CHKEMPLOYE->Checked = true; // Establecer como seleccionado por defecto
+			this->HEDTITLE->HeaderText = L"Titulo Profesional";
+			this->HEDTITLE->MinimumWidth = 6;
+			this->HEDTITLE->Name = L"HEDTITLE";
+			this->HEDTITLE->ReadOnly = true;
+			this->HEDTITLE->Width = 125;
+			// 
+			// HEDASIGNEDCLAS
+			// 
+			this->HEDASIGNEDCLAS->HeaderText = L"Clase Asignada";
+			this->HEDASIGNEDCLAS->MinimumWidth = 6;
+			this->HEDASIGNEDCLAS->Name = L"HEDASIGNEDCLAS";
+			this->HEDASIGNEDCLAS->ReadOnly = true;
+			this->HEDASIGNEDCLAS->Width = 125;
+			// 
+			// HEDSECASIGNED
+			// 
+			this->HEDSECASIGNED->HeaderText = L"Seccion Asignada";
+			this->HEDSECASIGNED->MinimumWidth = 6;
+			this->HEDSECASIGNED->Name = L"HEDSECASIGNED";
+			this->HEDSECASIGNED->ReadOnly = true;
+			this->HEDSECASIGNED->Width = 125;
 			// 
 			// Form1
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->BackColor = System::Drawing::SystemColors::Desktop;
-			this->ClientSize = System::Drawing::Size(832, 302);
+			this->ClientSize = System::Drawing::Size(832, 337);
 			this->Controls->Add(this->Personal);
 			this->Controls->Add(this->groupBox1);
 			this->ForeColor = System::Drawing::SystemColors::ControlText;
@@ -409,9 +464,10 @@ namespace CppCLRWinFormsProject {
 			CMPONAME->Clear();
 			CMPOAPELLI->Clear();
 			CMPOSALARIO->Clear();
-			CHKEMPLOYE->Checked = false;
+			CHKEMPLOYE->Checked = true;
 			CHKGERENTE->Checked = false;
 			CHKDEVELOPER->Checked = false;
+			CHKMASTER->Checked = false;
 			CMPOID->Focus();
         return;
     }
@@ -436,6 +492,9 @@ namespace CppCLRWinFormsProject {
 		String^ bono;
 		String^ lineas;
 		String^ precioLinea;
+		String^ Titulo = "";
+		String^ ClaseAsign = "";
+		String^ SeccionAsign = "";
 
 
 		if (CHKEMPLOYE->Checked) {
@@ -467,6 +526,22 @@ namespace CppCLRWinFormsProject {
 			else {
 				return;
 			}
+		} else if (CHKMASTER->Checked) {
+			rol = "Maestro";
+			bono = "0";
+			lineas = "0";
+			precioLinea = "0";
+			CuadroMaestro^ formMaster = gcnew CuadroMaestro();
+			if (formMaster->ShowDialog() == Windows::Forms::DialogResult::OK) {
+				Titulo = formMaster->TituloProf;
+				ClaseAsign = formMaster->ClaseAsignada;
+				SeccionAsign = formMaster->SeccionAsignada;
+			}
+			else {
+				return;
+
+			}
+
 		}
 
 		// Agregar a DataGridView - Nota cómo se usa -> para métodos de String^
@@ -478,7 +553,10 @@ namespace CppCLRWinFormsProject {
 			salario.ToString("F2"),  // double es tipo de valor, usa .
 			bono,                   // Ya es String^
 			lineas,                 // Ya es String^
-			precioLinea            // Ya es String^
+			precioLinea,            // Ya es String^
+			Titulo,
+			ClaseAsign,
+			SeccionAsign
 		);
 
 		// Limpiar formulario
@@ -489,6 +567,7 @@ namespace CppCLRWinFormsProject {
 		CHKEMPLOYE->Checked = true;
 		CHKGERENTE->Checked = false;
 		CHKDEVELOPER->Checked = false;
+		CHKMASTER->Checked = false;
 		CMPOID->Focus();
 	}
 };

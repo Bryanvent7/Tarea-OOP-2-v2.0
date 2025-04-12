@@ -44,6 +44,12 @@
     <ClInclude Include="Desarrollador.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Maestro.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CuadroMastro.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CppCLR_WinFormsProject.cpp">
@@ -71,6 +77,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Desarrollador.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Maestro.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CuadroMastro.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

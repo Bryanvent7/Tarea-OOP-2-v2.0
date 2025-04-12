@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "Empleado.h"
 #include "Gerente.h"
@@ -377,7 +377,7 @@ namespace CppCLRWinFormsProject {
 		}
 #pragma endregion
 		private: System::Void BTONAGREGAR_Click(System::Object^ sender, System::EventArgs^ e) {
-		// Validación básica de campos vacíos
+		// ValidaciÃ³n bÃ¡sica de campos vacÃ­os
 		if (CMPOID->Text->Length == 0 || CMPONAME->Text->Length == 0 ||
 			CMPOAPELLI->Text->Length == 0 || CMPOSALARIO->Text->Length == 0) {
 			MessageBox::Show("Todos los campos son obligatorios");
@@ -389,14 +389,19 @@ namespace CppCLRWinFormsProject {
         CMPOAPELLI->Text == "Ultra" && 
         CMPOSALARIO->Text == "Kill")
 		{
-            if (CHKGERENTE->Checked) 
+			 if (CHKEMPLOYE->Checked)
+			 {
+				 auto player = gcnew System::Media::SoundPlayer("Tenebre Rosso Sangue(Synthwave).wav"); //creditos : Takenaki https://youtu.be/CNQt6amg4LU
+				 player->Play();
+			 }
+			 else if (CHKGERENTE->Checked) 
             {
-                auto player = gcnew System::Media::SoundPlayer("Tenebre Rosso Sangue(cover).wav");
+				 auto player = gcnew System::Media::SoundPlayer("Tenebre Rosso Sangue(cover).wav"); //creditos : ZAê“˜ https://youtu.be/sE3Rjg38TVY
                 player->Play();
             }
             else if (CHKDEVELOPER->Checked) 
             {
-                auto player = gcnew System::Media::SoundPlayer("Tenebre Rosso Sangue(Og).wav");
+				 auto player = gcnew System::Media::SoundPlayer("Tenebre Rosso Sangue(Og).wav"); //creditos : Keygen Church https://youtu.be/L5q4uYj-gyg
                 player->Play();
             }
 			// Limpiar formulario
@@ -414,11 +419,11 @@ namespace CppCLRWinFormsProject {
 		// Convertir salario
 		double salario;
 		if (!Double::TryParse(CMPOSALARIO->Text, salario)) {
-			MessageBox::Show("El salario debe ser un número válido");
+			MessageBox::Show("El salario debe ser un nÃºmero vÃ¡lido");
 			return;
 		}
 
-		// Verificar ID único
+		// Verificar ID Ãºnico
 		for each (DataGridViewRow ^ row in Personal->Rows) {
 			if (row->Cells[0]->Value != nullptr && row->Cells[0]->Value->ToString() == CMPOID->Text) {
 				MessageBox::Show("El ID ya existe");
@@ -426,7 +431,7 @@ namespace CppCLRWinFormsProject {
 			}
 		}
 
-		// Procesar según el tipo de empleado
+		// Procesar segÃºn el tipo de empleado
 		String^ rol;
 		String^ bono;
 		String^ lineas;
@@ -445,7 +450,7 @@ namespace CppCLRWinFormsProject {
 			precioLinea = "0";
 			CuadroGerente^ formGerente = gcnew CuadroGerente();
 			if (formGerente->ShowDialog() == Windows::Forms::DialogResult::OK) {
-				bono = formGerente->Bono->ToString();  // Usando -> aquí
+				bono = formGerente->Bono->ToString();  // Usando -> aquÃ­
 			}
 			else {
 				return;
@@ -464,7 +469,7 @@ namespace CppCLRWinFormsProject {
 			}
 		}
 
-		// Agregar a DataGridView - Nota cómo se usa -> para métodos de String^
+		// Agregar a DataGridView - Nota cÃ³mo se usa -> para mÃ©todos de String^
 		Personal->Rows->Add(
 			CMPOID->Text,
 			CMPONAME->Text,
